@@ -9,11 +9,10 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "user")
+@Table(name = "USER_TABLE")
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements Serializable {
-
+public class User implements Serializable{
 
     private final static long serialVersionUID=1L;
 
