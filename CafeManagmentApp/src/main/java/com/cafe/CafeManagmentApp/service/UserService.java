@@ -2,6 +2,7 @@ package com.cafe.CafeManagmentApp.service;
 
 
 import com.cafe.CafeManagmentApp.constents.CafeConstents;
+import com.cafe.CafeManagmentApp.exception.UserNotFoundException;
 import com.cafe.CafeManagmentApp.model.User;
 import com.cafe.CafeManagmentApp.repository.UserRepository;
 import com.cafe.CafeManagmentApp.utils.CafeUtils;
@@ -82,4 +83,33 @@ public class UserService {
 
 
     }
+
+
+    //+++++++ From hier ist not finished
+
+    public ResponseEntity<String> login(Map<String, String> requestMap) {
+        try{
+
+            return null;
+
+        }catch (Exception ex ){
+            ex.printStackTrace();
+            return CafeUtils.getResponseEntity(CafeConstents.INVALID_DATA,HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+
+    public User getUserDetails(String email) throws UserNotFoundException {
+      User userDetails = userRepository.findByEmail(email);
+      if (!Objects.isNull(userDetails)){
+          return userDetails;
+      }
+      else {
+          throw new UserNotFoundException("User not found in the Database");
+      }
+    }
+
+
+
 }
