@@ -15,13 +15,13 @@ public interface UserRest {
 
 
     @PostMapping(path ="/signUp")
-    public ResponseEntity<String> signUp(@RequestBody Map<String,String> requestMap);
+    ResponseEntity<String> signUp(@RequestBody Map<String, String> requestMap);
 
     @PostMapping(path ="/login")
-    public ResponseEntity<String> login(@RequestBody Map<String,String> requestMap);
+     ResponseEntity<String> login(@RequestBody Map<String,String> requestMap);
 
     @GetMapping(path ="/get")
-    public ResponseEntity<List<UserWrapper>> getAllUser(@RequestParam  String email);
+     ResponseEntity<List<UserWrapper>> getAllUser(@RequestParam  String email);
 
 
 }
