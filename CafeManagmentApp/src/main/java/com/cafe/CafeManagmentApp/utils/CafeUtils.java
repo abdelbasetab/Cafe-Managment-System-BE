@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 /**
- * All Static Methode that will be used in more then one Class 
+ * All Static Methode that will be used in more than one Class
  */
 
 public class CafeUtils {

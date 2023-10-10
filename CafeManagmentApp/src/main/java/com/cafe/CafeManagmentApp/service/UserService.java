@@ -2,6 +2,7 @@ package com.cafe.CafeManagmentApp.service;
 
 
 import com.cafe.CafeManagmentApp.constents.CafeConstents;
+import com.cafe.CafeManagmentApp.dto.UserWrapper;
 import com.cafe.CafeManagmentApp.exception.UserNotFoundException;
 import com.cafe.CafeManagmentApp.model.User;
 import com.cafe.CafeManagmentApp.repository.UserRepository;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -22,6 +25,37 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+
+    /**
+     *
+     * @return all users from Database
+     */
+    public ResponseEntity<List<UserWrapper>> getAllUser() {
+        try {
+
+            List<UserWrapper> allUser = new ArrayList();
+
+            List<User> users = new ArrayList<>();
+            users = userRepository.findAll();
+
+            // add user data to the DAO List
+            users.forEach(user -> {
+                UserWrapper userDao = new UserWrapper(user.getId(), user.getName(), user.getContactNumber(), user.getEmail(), user.getPassword(), user.getStatus());
+                allUser.add(userDao);
+
+            });
+            return new ResponseEntity<>(allUser,HttpStatus.OK);
+
+
+
+        }catch (Exception ex){
+
+            ex.printStackTrace();
+        }
+
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
 
     public ResponseEntity<String> signUp(Map<String, String> requestMap) {
 
