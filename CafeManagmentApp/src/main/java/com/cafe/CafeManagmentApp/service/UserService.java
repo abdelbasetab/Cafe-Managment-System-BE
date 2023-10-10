@@ -25,26 +25,38 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    CustomerUserDetailsService customerUserDetailsService;
 
     /**
      *
      * @return all users from Database
      */
-    public ResponseEntity<List<UserWrapper>> getAllUser() {
+    public ResponseEntity<List<UserWrapper>> getAllUser(String username) {
+
         try {
+            customerUserDetailsService.loadUserByUsername(username);
 
-            List<UserWrapper> allUser = new ArrayList();
+            //Check if the currentUser an Admin or not
+            if (customerUserDetailsService.isAdmin()) {
+                List<UserWrapper> allUser = new ArrayList();
 
-            List<User> users = new ArrayList<>();
-            users = userRepository.findAll();
+                List<User> users = new ArrayList<>();
+                users = userRepository.findAll();
 
-            // add user data to the DAO List
-            users.forEach(user -> {
-                UserWrapper userDao = new UserWrapper(user.getId(), user.getName(), user.getContactNumber(), user.getEmail(), user.getPassword(), user.getStatus());
-                allUser.add(userDao);
+                // add user data to the DTO List
+                users.forEach(user -> {
+                    UserWrapper userDao = new UserWrapper(user.getId(), user.getName(), user.getContactNumber(), user.getEmail(), user.getPassword(), user.getStatus());
+                    allUser.add(userDao);
 
-            });
-            return new ResponseEntity<>(allUser,HttpStatus.OK);
+                });
+                return new ResponseEntity<>(allUser, HttpStatus.OK);
+            }
+            else {
+
+                //User don't have the permission to access to this resource
+                return new ResponseEntity<>(new ArrayList<>(), HttpStatus.FORBIDDEN);
+            }
 
 
 
@@ -52,7 +64,7 @@ public class UserService {
 
             ex.printStackTrace();
         }
-
+        //if something goes wrong
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
@@ -121,6 +133,7 @@ public class UserService {
 
     //+++++++ From hier ist not finished
 
+    //todo
     public ResponseEntity<String> login(Map<String, String> requestMap) {
         try{
 

@@ -20,6 +20,6 @@ public interface UserRest {
     @PostMapping(path ="/login")
     public ResponseEntity<String> login(@RequestBody Map<String,String> requestMap);
 
-    @PostMapping(path ="/get")
-    public ResponseEntity<List<UserWrapper>> getAllUser();
+    @GetMapping(path ="/get")
+    public ResponseEntity<List<UserWrapper>> getAllUser(@RequestParam  String email);
 }
