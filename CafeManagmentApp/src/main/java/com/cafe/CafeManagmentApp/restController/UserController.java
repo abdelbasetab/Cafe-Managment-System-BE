@@ -25,6 +25,18 @@ public class UserController implements UserRest {
 
 
 
+    //update User Data
+    //todo
+    @Override
+    public ResponseEntity<String> update(Map<String, String> requestMap) {
+        try{
+
+            return userService.update(requestMap);
+        }catch (Exception ex){
+
+        }
+        return null;
+    }
 
 
     //get all user from database ,if the current user is an Admin
@@ -43,6 +55,9 @@ public class UserController implements UserRest {
         // when something went wrong
         return new ResponseEntity<List<UserWrapper>>(new ArrayList<>(),HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+
+
     @Override
     public ResponseEntity<String> signUp(Map<String, String> requestMap) {
         try {
