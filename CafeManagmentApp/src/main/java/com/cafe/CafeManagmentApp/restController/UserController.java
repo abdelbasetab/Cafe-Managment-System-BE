@@ -27,6 +27,7 @@ public class UserController implements UserRest {
 
 
 
+    //get all user from database ,if the current user is an Admin
     @Override
     public ResponseEntity<List<UserWrapper>> getAllUser(@RequestParam String email) {
         try{
@@ -62,11 +63,9 @@ public class UserController implements UserRest {
 
         }catch (Exception ex){
 
-
+            ex.printStackTrace();
         }
-
-
-        return null;
+        return CafeUtils.getResponseEntity(CafeConstents.SOMETHING_WENT_WRONG,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 

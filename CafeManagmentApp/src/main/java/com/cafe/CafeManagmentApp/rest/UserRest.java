@@ -22,4 +22,6 @@ public interface UserRest {
 
     @GetMapping(path ="/get")
     public ResponseEntity<List<UserWrapper>> getAllUser(@RequestParam  String email);
+
+
 }

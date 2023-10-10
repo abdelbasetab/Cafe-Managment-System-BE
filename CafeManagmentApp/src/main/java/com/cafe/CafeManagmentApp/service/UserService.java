@@ -37,8 +37,8 @@ public class UserService {
         try {
             customerUserDetailsService.loadUserByUsername(username);
 
-            //Check if the currentUser an Admin or not
-            if (customerUserDetailsService.isAdmin()) {
+            //Check if the currentUser an Admin or not and is an active account
+            if (customerUserDetailsService.isAdmin() && customerUserDetailsService.isActivatAccount()) {
                 List<UserWrapper> allUser = new ArrayList();
 
                 List<User> users = new ArrayList<>();
@@ -131,18 +131,42 @@ public class UserService {
     }
 
 
-    //+++++++ From hier ist not finished
 
-    //todo
+    //case1 : user and the account is not active
+    //case2 : user and the account is  active
+    //case3 : is  user not exists  or   something went wrong
+
     public ResponseEntity<String> login(Map<String, String> requestMap) {
         try{
 
-            return null;
 
-        }catch (Exception ex ){
-            ex.printStackTrace();
-            return CafeUtils.getResponseEntity(CafeConstents.INVALID_DATA,HttpStatus.BAD_REQUEST);
+            customerUserDetailsService.loadUserByUsername(requestMap.get("email"));
+
+            if(!Objects.isNull(customerUserDetailsService.getUserDetails())){
+                //case1
+                if (customerUserDetailsService.isActivatAccount()){
+                    if (customerUserDetailsService.getUserDetails().getPassword().equals(requestMap.get("password"))) {
+                        return CafeUtils.getResponseEntity(CafeConstents.SUCCESSFUL_LOGIN,HttpStatus.ACCEPTED);
+                    }else {
+                        return CafeUtils.getResponseEntity(CafeConstents.WRONG_PASSWORD,HttpStatus.BAD_REQUEST);
+                    }
+                }
+
+                //case2
+                else{
+                    return CafeUtils.getResponseEntity(CafeConstents.ACCOUNT_IS_NOT_ACTIVE,HttpStatus.UNAUTHORIZED);
+                }
+            }
+
+
         }
+
+        catch (Exception ex ){
+            ex.printStackTrace();
+
+        }
+        //case4
+        return CafeUtils.getResponseEntity(CafeConstents.INVALID_DATA,HttpStatus.BAD_REQUEST);
     }
 
 
