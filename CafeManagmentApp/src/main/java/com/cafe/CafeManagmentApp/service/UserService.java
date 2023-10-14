@@ -182,16 +182,80 @@ public class UserService {
     }
 
 
-    //todo
+    //todo ckeck the methode and test it 
     public ResponseEntity<String> update(Map<String, String> requestMap) {
         try{
+            //Case 1 check if there is an  account with this data
+            User loadUser = customerUserDetailsService.loadUserByUsername(requestMap.get("email"));
 
-            
 
+
+            if (!Objects.isNull(loadUser)){
+                //case 2 check if the account active
+                if (customerUserDetailsService.isActivatAccount()){
+
+                    User updatedUser = loadUpdatedData(requestMap);
+                    //unupdated parameter
+                    updatedUser.setId(loadUser.getId());
+                    updatedUser.setEmail(loadUser.getEmail());
+                    updatedUser.setRole(loadUser.getRole());
+                    updatedUser.setStatus(loadUser.getStatus());
+                    //updatable parameter
+                    //check which parameter has changed
+                    if (Objects.isNull(updatedUser.getPassword())){
+                        updatedUser.setPassword(loadUser.getPassword());
+                    }
+                    if (Objects.isNull(updatedUser.getContactNumber())){
+                        updatedUser.setPassword(loadUser.getContactNumber());
+                    }
+                    if (Objects.isNull(updatedUser.getName())){
+                        updatedUser.setPassword(loadUser.getName());
+                    }
+                    userRepository.save(updatedUser);
+
+                    return CafeUtils.getResponseEntity(CafeConstents.UPDATED_SUCCESSFUL,HttpStatus.OK);
+                }else{
+                    return CafeUtils.getResponseEntity(CafeConstents.ACCOUNT_IS_NOT_ACTIVE,HttpStatus.OK);
+                }
+
+            }else{
+
+                return  CafeUtils.getResponseEntity(CafeConstents.ACCOUNT_IS_NOT_EXISTS,HttpStatus.OK);
+
+            }
 
         }catch (Exception ex){
             ex.printStackTrace();
         }
-        return null;
+        return CafeUtils.getResponseEntity(CafeConstents.SOMETHING_WENT_WRONG,HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
+
+
+
+
+    private User loadUpdatedData(Map<String,String> requestMap){
+        User user = new User();
+        if (!Objects.isNull(requestMap.get("email"))){
+            user.setEmail(requestMap.get("email"));
+
+        }
+        if (!Objects.isNull(requestMap.get("password"))){
+            user.setPassword(requestMap.get("password"));
+
+        }
+        if (!Objects.isNull(requestMap.get("name"))){
+            user.setName(requestMap.get("name"));
+
+        }
+        if (!Objects.isNull(requestMap.get("contactNumber"))){
+            user.setContactNumber(requestMap.get("contactNumber"));
+
+        }
+
+        return user;
+
+
+    }
+
 }

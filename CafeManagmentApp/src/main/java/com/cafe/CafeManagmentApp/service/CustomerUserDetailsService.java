@@ -47,6 +47,15 @@ public class CustomerUserDetailsService {
             return false;
         }
     }
+
+
+    public boolean isUser(){
+        if(userDetails.getRole().equalsIgnoreCase("user")){
+            return true;
+        }else {
+            return false;
+        }
+    }
     public boolean isActivatAccount(){
         if(userDetails.getStatus().equalsIgnoreCase("true")){
             return true;

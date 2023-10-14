@@ -8,7 +8,6 @@ import com.cafe.CafeManagmentApp.utils.CafeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,6 +32,8 @@ public class UserController implements UserRest {
 
             return userService.update(requestMap);
         }catch (Exception ex){
+            ex.printStackTrace();
+
 
         }
         return null;

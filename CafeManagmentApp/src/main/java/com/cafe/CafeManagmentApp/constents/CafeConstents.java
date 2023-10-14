@@ -22,4 +22,8 @@ public class CafeConstents {
 
     public static final String ACCOUNT_IS_NOT_ACTIVE= "Account is note active anymore  ";
     public static final String WRONG_PASSWORD = "Password is incorrect";
+    public static final String UPDATED_SUCCESSFUL = "Data updated Successful";
+
+    private static final String UNAUTHORISED_ACCESS ="Unauthorised access";
+
 }
