@@ -17,6 +17,9 @@ public class CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
 
+
+    //todo Add category
+
     public ResponseEntity<String> addNewCategory(Map<String, String> requestMap) {
         try {
 
