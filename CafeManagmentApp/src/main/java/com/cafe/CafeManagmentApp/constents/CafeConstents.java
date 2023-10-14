@@ -24,6 +24,6 @@ public class CafeConstents {
     public static final String WRONG_PASSWORD = "Password is incorrect";
     public static final String UPDATED_SUCCESSFUL = "Data updated Successful";
 
-    private static final String UNAUTHORISED_ACCESS ="Unauthorised access";
+    public static final String UNAUTHORISED_ACCESS ="Unauthorised access";
 
 }
