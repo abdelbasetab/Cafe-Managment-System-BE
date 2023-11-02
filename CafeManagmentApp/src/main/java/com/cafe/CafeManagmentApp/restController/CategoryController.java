@@ -19,9 +19,7 @@ public class CategoryController implements CategoryRest {
     @Override
     public ResponseEntity<String> addNewCategory(Map<String, String> requestMap) {
 
-
         try {
-
             return categoryService.addNewCategory(requestMap);
 
         }catch (Exception ex){
