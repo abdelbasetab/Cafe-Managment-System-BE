@@ -26,5 +26,9 @@ public interface UserRest {
     @PostMapping(path ="/update")
     public ResponseEntity<String> update(@RequestBody Map<String,String> requestMap);
 
+    //todo create methode to change password
+   /* @PostMapping(path ="/changePassword")
+    public ResponseEntity<String> changePassword(@RequestBody Map<String,String> requestMap);*/
+
 
 }

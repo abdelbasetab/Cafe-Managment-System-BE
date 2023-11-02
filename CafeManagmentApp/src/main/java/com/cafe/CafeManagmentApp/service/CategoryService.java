@@ -22,7 +22,7 @@ public class CategoryService {
     CustomerUserDetailsService customerUserDetailsService;
 
 
-    //todo check if the category name is already exist 
+    //todo check if the category name is already exist
 
     public ResponseEntity<String> addNewCategory(Map<String, String> requestMap) {
         try {
